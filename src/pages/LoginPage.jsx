@@ -6,6 +6,7 @@ import TodolistPage from "./TodolistPage";
 import * as Yup from "yup";
 import todoApi from "../api/todoApi";
 import { toast } from "react-toastify";
+import { Key, Loader, SquarePen } from "lucide-react";
 
 const initailInput = {
   username: "",
@@ -39,7 +40,7 @@ function LoginPage() {
       setInput(initailInput);
       console.log("res.data", res.data);
 
-      toast.success("Login Success !")
+      // toast.success("Login Success !")
 
       navigate("/todolist");
     } catch (error) {
@@ -50,7 +51,7 @@ function LoginPage() {
           return acc;
         }, {});
 
-        toast.error("Login Fail !")
+        // toast.error("Login Fail !")
         setInputError(err);
       }
     } finally {
@@ -70,7 +71,7 @@ function LoginPage() {
               <InputForm
                 hdlChaneg={hdlChange}
                 id="username"
-                placeholder="Email"
+                placeholder="Username"
                 error={inputError.username}
                 value={input.username}
               />
@@ -83,10 +84,19 @@ function LoginPage() {
                 type="password"
               />
             </div>
-            <button 
-            isLoading={isLoading}>
-              <></>
-              Login
+            <button className="w-full flex justify-center gap-2 py-2 mt-2 rounded-xl bg-gray-700 text-white cursor-pointer hover:bg-gray-800 duration-300">
+              {isLoading ? (
+            <>
+              <Loader className="w-5 h-5 animate-spin" strokeWidth={1.5} />
+              <span>...Loading</span>
+            </>
+          ) : (
+            <>
+              <Key className="w-5 h-5"strokeWidth={1.5} />
+              <span>Login</span>
+            </>
+          )}
+              
             </button>
           </form>
         </div>

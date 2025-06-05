@@ -6,4 +6,7 @@ const todoApi = {};
 todoApi.login = async(input) => {
   return axios.post(`${BASE_URL}/api/V1/auth/login`,input)
 }
+todoApi.register = async(input) => {
+  return axios.post(`${BASE_URL}/api/V1/auth/register`,input)
+}
 export default todoApi;

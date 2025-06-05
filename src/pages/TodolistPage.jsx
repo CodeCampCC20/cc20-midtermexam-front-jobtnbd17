@@ -12,9 +12,41 @@ function TodoListPage() {
        
     }
   }
+  const hdlSubmit = async (e) => {
+      try {
+        e.preventDefault();
+        setIsLoading(true);
+  
+        //validator
+        schemaLogin.validateSync(input, { abortEarly: false });
+        console.log("input", input);
+  
+        //api
+        const res = await todoApi.login(input);
+        setInput(initailInput);
+        console.log("res.data", res.data);
+  
+        toast.success("Login Success !")
+  
+        navigate("/todolist");
+      } catch (error) {
+        console.log(error);
+        if (error instanceof Yup.ValidationError) {
+          const err = error.inner.reduce((acc, cur) => {
+            acc[cur.path] = cur.message;
+            return acc;
+          }, {});
+  
+          toast.error("Login Fail !")
+          setInputError(err);
+        }
+      } finally {
+        setIsLoading(false);
+      }
+    };
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-purple-600 to-purple-900">"
-      <div className='w-2/5 border rounded-3xl p-8 mx-auto'>
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-gray-600 to-gray-900">"
+      <div className='w-2/5 border rounded-3xl p-8 mx-auto bg-violet-300'>
         <h1 className='text-2xl mb-4 flex justify-between'>
           MY Todo !<Sparkles /></h1>
         <div className='mb-4 flex'>
